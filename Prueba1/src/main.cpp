@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <MP.cpp>
 #include <LUX.cpp>
-
+#include <GLOBAL.cpp>
 
 /*
 SCL - 21
