@@ -2,7 +2,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-#define ONE_WIRE_BUS 4
+#define ONE_WIRE_BUS 19
 #define vcc 15
 
 OneWire oneWire(ONE_WIRE_BUS);

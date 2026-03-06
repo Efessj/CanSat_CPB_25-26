@@ -20,7 +20,7 @@ unsigned long workingTime = 0;
 
 void setup(){
   Serial.begin(9600);
-  apc.begin(9600, SERIAL_8N1, 16, 17);
+  apc_.begin(9600, SERIAL_8N1, 16, 17);
   pinMode(VCC_APC,OUTPUT);
   pinMode(VCC_PCB_UP,OUTPUT);
   digitalWrite(VCC_APC,HIGH);
