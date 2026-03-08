@@ -8,7 +8,7 @@ MPU9250_asukiaaa mpu;
 enum mode {
   ACELERACION, GIROSCOPIO
 };
-mode currentMode = ACELERACION;
+mode currentMode = GIROSCOPIO;
 
 void setup() {
   Serial.begin(9600);
