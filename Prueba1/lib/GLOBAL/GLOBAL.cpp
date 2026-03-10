@@ -6,6 +6,9 @@
 #define ONE_WIRE_BUS 19
 #define VCC_APC 5
 #define VCC_PCB_UP 18
+#define DHTTYPE DHT22
+
+const int DHTPin = 27; 
 
 #pragma once
 

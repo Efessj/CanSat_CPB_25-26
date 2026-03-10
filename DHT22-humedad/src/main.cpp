@@ -3,7 +3,7 @@
 
 
 
-#define DHTTYPE DHT22   
+#define DHTTYPE DHT22
 
 const int DHTPin = 5; 
 
