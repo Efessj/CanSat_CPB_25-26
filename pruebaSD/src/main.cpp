@@ -7,20 +7,16 @@
 
 void setup() {
   Serial.begin(9600);
+  Serial.print("hola mundo");
+  delay(3000);
 
-  if (!SD.begin(SD_CS)) {
-    Serial.println("Error: no se pudo montar la SD");
-    //while (1);
-  }
-
-  //Serial.println("SD montada correctamente");
 }
 
 void loop() {
   if (!SD.begin(SD_CS)) {
     Serial.println("Error: no se pudo montar la SD");
-    //while (1);
+  } else {
+    Serial.println("SD montada correctamente");
   }
-
-  delay(3000);
+  delay(1000);
 }
