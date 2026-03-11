@@ -1,61 +1,59 @@
 {
 	"folders": [
 		{
-			"name": "Projects",
-			"path": "."
-		},
-		{
 			"name": "Mision Primaria",
-			"path": "Mision Primaria"
+			"path": "../Mision Primaria"
 		},
 		{
 			"name": "GPS",
-			"path": "GPS"
+			"path": "../GPS"
 		},
 		{
 			"name": "States",
-			"path": "States"
+			"path": "../States"
 		},
 		{
 			"name": "DS18B20-anal_intruder",
-			"path": "DS18B20-anal_intruder"
+			"path": "../DS18B20-anal_intruder"
 		},
 		{
 			"name": "Giroscopio-acelerometro_MPU-9250",
-			"path": "Giroscopio-acelerometro_MPU-9250"
+			"path": "../Giroscopio-acelerometro_MPU-9250"
 		},
 		{
 			"name": "gy-302",
-			"path": "gy-302"
+			"path": "../gy-302"
 		},
 		{
 			"name": "CJMCU",
-			"path": "CJMCU"
+			"path": "../CJMCU"
 		},
 		{
 			"name": "MPU9250-Mag",
-			"path": "MPU9250-Mag"
+			"path": "../MPU9250-Mag"
 		},
 		{
 			"name": "DHT22-humedad",
-			"path": "DHT22-humedad"
+			"path": "../DHT22-humedad"
 		},
 		{
 			"name": "Prueba1",
-			"path": "Prueba1"
+			"path": "../Prueba1"
 		},
 		{
 			"name": "MicroSD",
-			"path": "MicroSD"
+			"path": "../MicroSD"
 		},
 		{
 			"name": "pruebaSD",
-			"path": "pruebaSD"
+			"path": "../pruebaSD"
 		},
 		{
-			"name": "pruebaArduinoSD",
-			"path": "../../Documents/PlatformIO/Projects/pruebaArduinoSD"
+			"name": "workspace",
+			"path": "../workspace"
 		}
+
+
 	],
 	"settings": {}
 }
