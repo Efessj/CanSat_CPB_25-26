@@ -3,10 +3,10 @@
 #include <SPI.h>
 #include <SD.h>
 
-#define SD_CS 5
-#define SD_MOSI 23
-#define SD_MISO 19
-#define SD_SCK 18
+#define SD_CS 32
+#define SD_MOSI 25
+#define SD_MISO 16
+#define SD_SCK 33
 
 SPIClass SPI_SD(HSPI);
 
@@ -60,8 +60,8 @@ void readCSV(const char* filename) {
 
 void setup() {
   Serial.begin(9600);
-
-  if (!SD.begin(SD_CS)) {
+  SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
+  if (!SD.begin(SD_CS, SPI_SD)) {
     Serial.println("Error SD");
   }else{
     Serial.println("SD lista");
