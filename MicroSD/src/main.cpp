@@ -68,13 +68,11 @@ void setup() {
   }
 
   writeCSV("/data.csv", "temp,press\n");
+  appendCSV("/data.csv", "23,101300\n");
   readCSV("/data.csv");
 }
 
 void loop() {
-  SPI_SD.begin(SD_SCK, SD_MISO,SD_MOSI, SD_CS);
-  if (!SD.begin(SD_CS, SPI_SD)) {
-    Serial.println("Error SD");
-  }
-  delay(5000);
+  readCSV("/data.csv");
+  delay(1000);
 }
