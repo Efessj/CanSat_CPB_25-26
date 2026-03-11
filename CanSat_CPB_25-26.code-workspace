@@ -51,6 +51,10 @@
 		{
 			"name": "pruebaSD",
 			"path": "pruebaSD"
+		},
+		{
+			"name": "pruebaArduinoSD",
+			"path": "../../Documents/PlatformIO/Projects/pruebaArduinoSD"
 		}
 	],
 	"settings": {}
