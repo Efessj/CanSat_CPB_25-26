@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <MP.cpp>
 #include <LUX.cpp>
+#include <IMU.cpp>
 #include <GLOBAL.cpp>
 
 /*
@@ -15,6 +16,7 @@ OneWire - 19 (cambiar en global)
 
 MP mp;
 LUX light;
+IMU imu;
 
 unsigned long workingTime = 0;
 
@@ -28,14 +30,18 @@ void setup(){
 
   mp.begin();
   light.begin();
+  imu.begin();
+  imu.calcOffset();
 }
 
 void loop(){
   if (workingTime < millis()){
     mp.readData();
     light.readData();
+    imu.readData();
     mp.sendData();
     light.sendData();
+    imu.sendData();
 
     workingTime += 1000;
   }

@@ -5,10 +5,12 @@
 
 #define SD_CS 32
 #define SD_MOSI 25
-#define SD_MISO 16
+#define SD_MISO 26
 #define SD_SCK 33
 
 SPIClass SPI_SD(HSPI);
+
+#define VCC 13
 
 void appendCSV(const char* filename, String data) {
 
@@ -59,6 +61,9 @@ void readCSV(const char* filename) {
 
 
 void setup() {
+  pinMode(VCC, OUTPUT);
+  digitalWrite(VCC, HIGH);
+
   Serial.begin(9600);
   SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
   if (!SD.begin(SD_CS, SPI_SD)) {
@@ -73,6 +78,19 @@ void setup() {
 }
 
 void loop() {
-  readCSV("/data.csv");
+  //SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
+  
+  SD.begin(SD_CS, SPI_SD);
+
+  /*Serial.print("Card Type: ");
+  switch (SD.cardType()) {
+    case CARD_NONE: Serial.println("No SD card attached"); break;
+    case CARD_MMC: Serial.println("MMC"); break;
+    case CARD_SD: Serial.println("SDSC"); break;
+    case CARD_SDHC: Serial.println("SDHC"); break;
+    default: Serial.println("Unknown"); break;
+  }*/
+  
+  //readCSV("/data.csv");
   delay(1000);
 }
