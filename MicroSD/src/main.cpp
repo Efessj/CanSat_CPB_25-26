@@ -4,11 +4,8 @@
 #include <SD.h>
 
 #define SD_CS 32
-#define SD_MOSI 25
-#define SD_MISO 26
-#define SD_SCK 33
 
-SPIClass SPI_SD(HSPI);
+SPIClass SPI_SD(VSPI);
 
 #define VCC 13
 
@@ -65,12 +62,18 @@ void setup() {
   digitalWrite(VCC, HIGH);
 
   Serial.begin(9600);
-  SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
+
+  //SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
+  
+  SD.begin(SD_CS);
+
+  
+  /*SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
   if (!SD.begin(SD_CS, SPI_SD)) {
     Serial.println("Error SD");
   }else{
     Serial.println("SD lista");
-  }
+  }*/
 
   writeCSV("/data.csv", "temp,press\n");
   appendCSV("/data.csv", "23,101300\n");
@@ -78,18 +81,16 @@ void setup() {
 }
 
 void loop() {
-  //SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
   
-  SD.begin(SD_CS, SPI_SD);
 
-  /*Serial.print("Card Type: ");
+  Serial.print("Card Type: ");
   switch (SD.cardType()) {
     case CARD_NONE: Serial.println("No SD card attached"); break;
     case CARD_MMC: Serial.println("MMC"); break;
     case CARD_SD: Serial.println("SDSC"); break;
     case CARD_SDHC: Serial.println("SDHC"); break;
     default: Serial.println("Unknown"); break;
-  }*/
+  }
   
   //readCSV("/data.csv");
   delay(1000);

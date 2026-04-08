@@ -51,6 +51,10 @@
 		{
 			"name": "workspace",
 			"path": "."
+		},
+		{
+			"name": "Receptor",
+			"path": "../Receptor"
 		}
 	],
 	"settings": {}

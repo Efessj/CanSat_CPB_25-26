@@ -23,6 +23,10 @@ public:
 
     void calcOffset(){
         Serial.println("**NO MOVER CanSat-Calculando offset del IMU...");
+        for (int i = 0; i < 3; i++) {
+            acceleration[i] = 0;
+            angularVelocity[i] = 0;
+        }
 
         delay(2000); // Esperar 2 segundos para estabilizar el sensor
 
@@ -31,51 +35,72 @@ public:
         while (i < 100) {
             unsigned long currentTime = micros();
             if (currentTime - lastTime >= 5000UL) {
-                accelerationOffset[0] += mpu.getAccelerationX();
-                accelerationOffset[1] += mpu.getAccelerationY();
-                accelerationOffset[2] += mpu.getAccelerationZ();
-                angularVelocityOffset[0] += mpu.getRotationX();
-                angularVelocityOffset[1] += mpu.getRotationY();
-                angularVelocityOffset[2] += mpu.getRotationZ();
+                int16_t ax, ay, az, gx, gy, gz;
+                mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+                accelerationOffset[0] += (ax / 16384.0);
+                accelerationOffset[1] += (ay / 16384.0);
+                accelerationOffset[2] += (az / 16384.0);
+                angularVelocityOffset[0] += (gx / 131.0);
+                angularVelocityOffset[1] += (gy / 131.0);
+                angularVelocityOffset[2] += (gz / 131.0);
                 lastTime = currentTime;
                 i++;
             }
         }
-        accelerationOffset[0] /= 100;
-        accelerationOffset[1] /= 100;
-        accelerationOffset[2] /= 100;
-        angularVelocityOffset[0] /= 100;
-        angularVelocityOffset[1] /= 100;
-        angularVelocityOffset[2] /= 100;
+
+        for (int i = 0; i < 3; i++) {
+            accelerationOffset[i] /= 100.0;
+            angularVelocityOffset[i] /= 100.0;
+        }
+
+        int axis = 0;
+        float maxVal = abs(accelerationOffset[0]);
+
+        for (int i = 1; i < 3; i++) {
+            if (abs(accelerationOffset[i]) > maxVal) {
+                maxVal = abs(accelerationOffset[i]);
+                axis = i;
+            }
+        }
+
+        if (accelerationOffset[axis] > 0) {
+            accelerationOffset[axis] -= 1;
+        } else {
+            accelerationOffset[axis] += 1;
+        }
+
+        
         delay(100);
         Serial.println("Offset del IMU calculado");
     }
 
     void readData(){
-        acceleration[0] = (mpu.getAccelerationX() - accelerationOffset[0]) / 16384.0;
-        acceleration[1] = (mpu.getAccelerationY() - accelerationOffset[1]) / 16384.0;
-        acceleration[2] = (mpu.getAccelerationZ() - accelerationOffset[2]) / 16384.0;
-        angularVelocity[0] = (mpu.getRotationX() - angularVelocityOffset[0]) / 131.0;
-        angularVelocity[1] = (mpu.getRotationY() - angularVelocityOffset[1]) / 131.0;
-        angularVelocity[2] = (mpu.getRotationZ() - angularVelocityOffset[2]) / 131.0;
+        int16_t ax, ay, az, gx, gy, gz;
+        mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+        acceleration[0] = (ax / 16384.0 - accelerationOffset[0]);
+        acceleration[1] = (ay / 16384.0 - accelerationOffset[1]);
+        acceleration[2] = (az / 16384.0 - accelerationOffset[2]);
+        angularVelocity[0] = (gx / 131.0 - angularVelocityOffset[0]);
+        angularVelocity[1] = (gy / 131.0 - angularVelocityOffset[1]);
+        angularVelocity[2] = (gz / 131.0 - angularVelocityOffset[2]);
     }
 
     void sendData(){
         Serial.print("Acel: ");
-        apc_.print("Acel: ");
+        Serial2.print("Acel: ");
         Serial.print(acceleration[0], 3); Serial.print(", ");
-        apc_.print(acceleration[0], 3); apc_.print(", ");
+        Serial2.print(acceleration[0], 3); Serial2.print(", ");
         Serial.print(acceleration[1], 3); Serial.print(", ");
-        apc_.print(acceleration[1], 3); apc_.print(", ");
-        Serial.println(acceleration[2], 3);
-        apc_.println(acceleration[2], 3);
-        Serial.print("Gyro: ");
-        apc_.print("Gyro: ");
+        Serial2.print(acceleration[1], 3); Serial2.print(", ");
+        Serial.print(acceleration[2], 3);
+        Serial2.print(acceleration[2], 3);
+        Serial.print(", Gyro: ");
+        Serial2.print(", Gyro: ");
         Serial.print(angularVelocity[0], 3); Serial.print(", ");
-        apc_.print(angularVelocity[0], 3); apc_.print(", ");
+        Serial2.print(angularVelocity[0], 3); Serial2.print(", ");
         Serial.print(angularVelocity[1], 3); Serial.print(", ");
-        apc_.print(angularVelocity[1], 3); apc_.print(", ");
+        Serial2.print(angularVelocity[1], 3); Serial2.print(", ");
         Serial.println(angularVelocity[2], 3);
-        apc_.println(angularVelocity[2], 3);
+        Serial2.println(angularVelocity[2], 3);
     }
 };

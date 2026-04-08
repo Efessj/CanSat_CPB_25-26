@@ -18,8 +18,8 @@ public:
 
     void sendData(){
         Serial.print("Hum: ");
-        apc_.print("Hum: ");
-        Serial.print(humidity);
-        apc_.print(humidity);
+        Serial2.print("Hum: ");
+        Serial.println(humidity);
+        Serial2.println(humidity);
     }
 };

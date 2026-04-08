@@ -37,10 +37,10 @@ public:
     
     if (lightMeter.begin(BH1750::CONTINUOUS_HIGH_RES_MODE)) {
       Serial.println("BH1750 init success");
-      apc_.println("BH1750 init success");
+      Serial2.println("BH1750 init success");
     } else {
       Serial.println("Error init BH1750");
-      apc_.println("Error init BH1750");
+      Serial2.println("Error init BH1750");
     }
   }
 
@@ -50,13 +50,13 @@ public:
 
   void sendData(){
     Serial.print(" Luz: ");
-    apc_.print(" Luz: ");
+    Serial2.print(" Luz: ");
 
     Serial.print(lux);
-    apc_.print(lux);
+    Serial2.print(lux);
 
     Serial.println(" lx");
-    apc_.println(" lx");
+    Serial2.println(" lx");
   }
 };
 

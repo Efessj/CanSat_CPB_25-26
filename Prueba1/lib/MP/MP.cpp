@@ -11,7 +11,7 @@ typedef DFRobot_BMP280_IIC    BMP;    // ******** use abbreviations instead of f
 BMP   bmp(&Wire, BMP::eSdoLow);
 DallasTemperature ds18(&oneWire_);
 
-unsigned long packet = 0;
+
 uint32_t pressure;
 float temp;
 float altittude;
@@ -52,23 +52,23 @@ public:
     switch(eStatus) {
       case BMP::eStatusOK:
         Serial.println("everything ok");
-        apc_.println("everything ok");
+        Serial2.println("everything ok");
         break;
       case BMP::eStatusErr:
         Serial.println("unknow error");
-        apc_.println("unknow error");
+        Serial2.println("unknow error");
         break;
       case BMP::eStatusErrDeviceNotDetected:
         Serial.println("device not detected");
-        apc_.println("device not detected");
+        Serial2.println("device not detected");
         break;
       case BMP::eStatusErrParameter:
         Serial.println("parameter error");
-        apc_.println("parameter error");
+        Serial2.println("parameter error");
         break;
       default:
         Serial.println("unknow status");
-        apc_.println("unknow status");
+        Serial2.println("unknow status");
         break;
     }
   }
@@ -77,17 +77,17 @@ public:
     bmp.reset();
     ds18.begin();
     Serial.println("bmp config test");
-    apc_.println("bmp config test");
+    Serial2.println("bmp config test");
 
     if (bmp.begin() != BMP::eStatusOK) {
       Serial.println("bmp begin faild");
-      apc_.println("bmp begin faild");
+      Serial2.println("bmp begin faild");
       printLastOperateStatus(bmp.lastOperateStatus);
       delay(1500);
+    } else {
+      Serial.println("bmp begin success");
+      Serial2.println("bmp begin success");
     }
-
-    Serial.println("bmp begin success");
-    apc_.println("bmp begin success");
 
 
     bmp.setConfigFilter(BMP::eConfigFilter_off);        // set config filter
@@ -106,21 +106,17 @@ public:
   }
 
   void sendData() {
-    Serial.print(packet);
-    apc_.print(packet);
     Serial.print(" presió: ");
-    apc_.print(" presió: ");
+    Serial2.print(" presió: ");
     Serial.print(pressure);
-    apc_.print(pressure);
+    Serial2.print(pressure);
     Serial.print(" temperatura: ");
-    apc_.print(" temperatura: ");
+    Serial2.print(" temperatura: ");
     Serial.print(temp);
-    apc_.print(temp);
+    Serial2.print(temp);
     Serial.print(" altitud: ");
-    apc_.print(" altitud: ");
-    Serial.print(altittude);
-    apc_.print(altittude);
-
-    packet ++;
+    Serial2.print(" altitud: ");
+    Serial.println(altittude);
+    Serial2.println(altittude);
   } 
 };
