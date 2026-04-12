@@ -49,12 +49,20 @@
 			"path": "../pruebaSD"
 		},
 		{
+			"name": "Receptor",
+			"path": "../Receptor"
+		},
+		{
+			"name": "apc_setup",
+			"path": "../../../Documents/PlatformIO/Projects/apc_setup"
+		},
+		{
 			"name": "workspace",
 			"path": "."
 		},
 		{
-			"name": "Receptor",
-			"path": "../Receptor"
+			"name": "bzz_test",
+			"path": "../../../Documents/PlatformIO/Projects/bzz_test"
 		}
 	],
 	"settings": {}

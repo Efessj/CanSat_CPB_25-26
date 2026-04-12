@@ -7,8 +7,6 @@
 
 SPIClass SPI_SD(VSPI);
 
-#define VCC 13
-
 void appendCSV(const char* filename, String data) {
 
   File file = SD.open(filename, FILE_APPEND);
@@ -58,22 +56,15 @@ void readCSV(const char* filename) {
 
 
 void setup() {
-  pinMode(VCC, OUTPUT);
-  digitalWrite(VCC, HIGH);
-
   Serial.begin(9600);
 
-  //SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
   
-  SD.begin(SD_CS);
-
   
-  /*SPI_SD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
   if (!SD.begin(SD_CS, SPI_SD)) {
     Serial.println("Error SD");
   }else{
     Serial.println("SD lista");
-  }*/
+  }
 
   writeCSV("/data.csv", "temp,press\n");
   appendCSV("/data.csv", "23,101300\n");

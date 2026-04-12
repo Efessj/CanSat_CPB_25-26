@@ -7,7 +7,7 @@
 
 
 typedef DFRobot_BMP280_IIC    BMP;    // ******** use abbreviations instead of full names ********
-
+OneWire oneWire_(ONE_WIRE_BUS);
 BMP   bmp(&Wire, BMP::eSdoLow);
 DallasTemperature ds18(&oneWire_);
 
