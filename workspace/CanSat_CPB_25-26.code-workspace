@@ -1,16 +1,32 @@
 {
 	"folders": [
 		{
+			"name": "States",
+			"path": "../States"
+		},
+		{
+			"name": "Prueba1",
+			"path": "../Prueba1"
+		},
+		{
+			"name": "Receptor",
+			"path": "../Receptor"
+		},
+		{
+			"name": "apc_setup",
+			"path": "../apc_setup"
+		},
+		{
+			"name": "imu-sd_test",
+			"path": "../imu-sd_test"
+		},
+		{
 			"name": "Mision Primaria",
 			"path": "../Mision Primaria"
 		},
 		{
 			"name": "GPS",
 			"path": "../GPS"
-		},
-		{
-			"name": "States",
-			"path": "../States"
 		},
 		{
 			"name": "DS18B20-anal_intruder",
@@ -37,10 +53,6 @@
 			"path": "../DHT22-humedad"
 		},
 		{
-			"name": "Prueba1",
-			"path": "../Prueba1"
-		},
-		{
 			"name": "MicroSD",
 			"path": "../MicroSD"
 		},
@@ -49,20 +61,16 @@
 			"path": "../pruebaSD"
 		},
 		{
-			"name": "Receptor",
-			"path": "../Receptor"
+			"name": "bzz_test",
+			"path": "../bzz_test"
 		},
 		{
-			"name": "apc_setup",
-			"path": "../../../Documents/PlatformIO/Projects/apc_setup"
+			"name": "IMUDATA_reader",
+			"path": "../IMUDATA_reader"
 		},
 		{
 			"name": "workspace",
 			"path": "."
-		},
-		{
-			"name": "bzz_test",
-			"path": "../../../Documents/PlatformIO/Projects/bzz_test"
 		}
 	],
 	"settings": {}

@@ -7,13 +7,8 @@
 
 SPIClass SPI_SD(VSPI);
 
-#define SAMPLE_INTERVAL_US 5000
-#define SAMPLES_PER_BLOCK 200  // 1 segundo
-
-
-
 // Buffer en RAM (1 segundo)
-Sample buffer[SAMPLES_PER_BLOCK];
+//Sample buffer[SAMPLES_PER_BLOCK];
 
 
 
@@ -22,6 +17,7 @@ class MICROSD {
 
     void begin(){
         SD.begin(SD_CS);
+        delay(100);
     }
 
     void appendCSV(const char* filename, String data) {
@@ -70,6 +66,7 @@ class MICROSD {
 
     void saveOneSecond(File &file, IMU imu) {
         uint32_t startMicros = micros();
+        Block block;
 
         for (int i = 0; i < SAMPLES_PER_BLOCK; i++) {
 
@@ -82,14 +79,17 @@ class MICROSD {
 
             Sample s;   
             imu.readDataSD(s);
-            
-
             s.t = micros();
-            buffer[i] = s;
+            
+            
+            block.header = BLOCK_HEADER;
+            block.samples[i] = s;
+            
+            //buffer[i] = block;
         }
 
         // Escritura en bloque
-        file.write((uint8_t*)buffer, sizeof(buffer));
+        file.write((uint8_t*)&block, sizeof(block));
         file.flush();
     }
 };

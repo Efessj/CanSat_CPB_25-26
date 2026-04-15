@@ -9,8 +9,8 @@
 
 float acceleration[3] = {0,0,0};
 float angularVelocity[3] = {0,0,0};
-float accelerationOffset[3] = {0,0,0};
-float angularVelocityOffset[3] = {0,0,0};
+int16_t accelerationOffset[3] = {0,0,0};
+int16_t angularVelocityOffset[3] = {0,0,0};
 MPU6050 mpu;
 
 class IMU {
@@ -41,12 +41,12 @@ public:
             if (currentTime - lastTime >= 5000UL) {
                 int16_t ax, ay, az, gx, gy, gz;
                 mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-                accelerationOffset[0] += (ax / 16384.0);
-                accelerationOffset[1] += (ay / 16384.0);
-                accelerationOffset[2] += (az / 16384.0);
-                angularVelocityOffset[0] += (gx / 131.0);
-                angularVelocityOffset[1] += (gy / 131.0);
-                angularVelocityOffset[2] += (gz / 131.0);
+                accelerationOffset[0] += (ax);
+                accelerationOffset[1] += (ay);
+                accelerationOffset[2] += (az);
+                angularVelocityOffset[0] += (gx);
+                angularVelocityOffset[1] += (gy);
+                angularVelocityOffset[2] += (gz);
                 lastTime = currentTime;
                 i++;
             }
@@ -68,9 +68,9 @@ public:
         }
 
         if (accelerationOffset[axis] > 0) {
-            accelerationOffset[axis] -= 1;
+            accelerationOffset[axis] -= ACCEL_SCALE;
         } else {
-            accelerationOffset[axis] += 1;
+            accelerationOffset[axis] += ACCEL_SCALE;
         }
 
         
@@ -81,24 +81,32 @@ public:
     void readData(){
         int16_t ax, ay, az, gx, gy, gz;
         mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-        acceleration[0] = (ax / 16384.0 - accelerationOffset[0]);
-        acceleration[1] = (ay / 16384.0 - accelerationOffset[1]);
-        acceleration[2] = (az / 16384.0 - accelerationOffset[2]);
-        angularVelocity[0] = (gx / 131.0 - angularVelocityOffset[0]);
-        angularVelocity[1] = (gy / 131.0 - angularVelocityOffset[1]);
-        angularVelocity[2] = (gz / 131.0 - angularVelocityOffset[2]);
+        acceleration[0] = ((ax  - accelerationOffset[0])/ ACCEL_SCALE);
+        acceleration[1] = ((ay - accelerationOffset[1]) / ACCEL_SCALE);
+        acceleration[2] = ((az - accelerationOffset[2]) / ACCEL_SCALE);
+        angularVelocity[0] = ((gx - angularVelocityOffset[0]) / GYRO_SCALE);
+        angularVelocity[1] = ((gy - angularVelocityOffset[1]) / GYRO_SCALE);
+        angularVelocity[2] = ((gz - angularVelocityOffset[2]) / GYRO_SCALE);
     }
 
     void readDataSD(Sample &sample){
         int16_t ax, ay, az, gx, gy, gz;
         mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-        sample.ax = ax / 16384.0 - accelerationOffset[0];
-        sample.ay = ay / 16384.0 - accelerationOffset[1];
-        sample.az = az / 16384.0 - accelerationOffset[2];
-        sample.gx = gx / 131.0 - angularVelocityOffset[0];
-        sample.gy = gy / 131.0 - angularVelocityOffset[1];
-        sample.gz = gz / 131.0 - angularVelocityOffset[2];
+        sample.ax = (ax  - accelerationOffset[0]);
+        sample.ay = (ay - accelerationOffset[1]);
+        sample.az = (az - accelerationOffset[2]);
+        sample.gx = (gx - angularVelocityOffset[0]);
+        sample.gy = (gy - angularVelocityOffset[1]);
+        sample.gz = (gz - angularVelocityOffset[2]);
         sample.t = micros();
+
+        Serial.print("Sample: ");
+        Serial.print(sample.ax); Serial.print(", ");
+        Serial.print(sample.ay); Serial.print(", ");
+        Serial.print(sample.az); Serial.print(", ");
+        Serial.print(sample.gx); Serial.print(", ");
+        Serial.print(sample.gy); Serial.print(", ");
+        Serial.println(sample.gz);
     }
 
     void sendData(){

@@ -143,6 +143,21 @@ void Buzzer(bool on) {
   else ledcWriteTone(0, 0);
 }
 
+void DataCollection() {
+  mp.readData();
+  light.readData();
+  hum.readData();
+  imu.readData();
+}
+
+void DataTransmission() {
+  sendIdentifier();
+  mp.sendData();
+  light.sendData();
+  hum.sendData();
+  imu.sendData();
+}
+
 void Waiting() {
   //Serial.println("Esperando");
   ToggleComponents(HIGH, LOW, LOW, HIGH);
@@ -211,6 +226,8 @@ void Flying() {
 
       String dataline = String(packet) + "," + mp.getData() + "," + light.getData() + "," + hum.getData() + "," + String(accelerationModule, 3) + "\n";
       sd.appendCSV("/data.csv", dataline);
+
+      sd.saveOneSecond(imuFile, imu);
 
       workingTime += 1000;
       packet++;

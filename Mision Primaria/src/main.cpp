@@ -9,7 +9,7 @@
 typedef DFRobot_BMP280_IIC    BMP;    // ******** use abbreviations instead of full names ********
 
 
-#define SEA_LEVEL_PRESSURE    1013.25   // sea level pressure
+#define SEA_LEVEL_PRESSURE 1018.05   // sea level pressure
 #define BMP_VCC 15
 #define ONE_WIRE_BUS 4
 
